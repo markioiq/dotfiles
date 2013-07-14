@@ -1,0 +1,97 @@
+ #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  # Nodoka - dotjp.nodoka
+
+  # Copyright (C) 1999-2005, TAGA Nayuta <nayuta@users.sourceforge.net>
+
+  #
+
+  # Modify by applet on 2013-05-03 for のどかGuiEdit
+
+  #
+
+include "read-keyboard-define.nodoka"                                   #1. キーボード定義ファイル 英語/日本語配列や、Emacsライク設定をシンボル定義で切り替えます。
+
+keymap Global                                                           #2. グローバルキーマップの設定
+
+  #3. 便宜上定義するもの 不要なら削除あるいはコメント化可能ですが、キーバインド出力は設定ファイルの解析に役立ちます。
+
+key C-A-D = &DescribeBindings                                           # (1) Ctrl-Alt-Dキーで、現在のキーバインド情報をログ出力
+
+key S-F1= &DescribeBindings                                             # (2) Shift-F1キーで、現在のキーバインド情報をログ出力
+
+key F1 = &SendPostMessage("PostTray",,"のどか", 0x0205, 0, 0)              # (3) F1キーで、のどかのメニューを開く
+
+#include "Shift-F2_toggle_US-JP-Keyboard.nodoka"                        # (4) Shift-F2キーで英語と日本語キーボード配列を切り替える設定
+
+  #
+
+  #4. サンプル設定
+
+  # 注1；(1)から(7)は併用できません。同時に有効にしないでください。
+
+#include "contrib\\nodoka-settings.txt"                                 # 注2：これらサンプル定義ファイルはユーザ様ご提供のものであり、非サポートです。
+
+  # 注3：(8)から(10)の設定ファイルの内部記述にも定義が重なるものがあるので有効にする場合にはご注意ください。
+
+  # 注4：これらの設定ファイルを修正して用いる場合には、インストールフォルダからホームディレクトリにコピーしてお使いください。
+
+#include "contrib\\sample.nodoka"                                       # (1) ヘルプのサンプル例 Esc<->半角全角、Ctrl<->英数、ダイアモンドカーソル ESDX、Ctrl-H,G,M、変換キーでIME ON、無変換でIME OFF
+
+#include "contrib\\98x1.nodoka"                                         # (2) NEC PC98x1キーボード用のキーボード定義ファイル　これを有効にする場合には、7行13行までコメントにして、別途 keymap Globalを宣言してください。
+
+#include "contrib\\ax.nodoka"                                           # (3) AXキーボード用のキーボード定義ファイル これを有効にする場合には、7行13行までコメントにして、別途 keymap Globalを宣言してください。
+
+#include "contrib\\109onAX.nodoka"                                      # (4) AXキーボード用のキーボード定義ファイル (3) ax.nodokaと併用だろうと考えますが未確認です。
+
+#include "contrib\\dvorak.nodoka"                                       # (5) dvorak配列用定義ファイル 英語配列用なので、-DUSE104(104.nodoka)と併用してください。
+
+#include "contrib\\DVORAKon109.nodoka"                                  # (6) dvorak配列用定義ファイル 日本語配列用なので、-DUSE109(109.nodoka)と併用してください。
+
+#include "contrib\\keitai.nodoka"                                       # (7) テンキーを用いてIME ON時に携帯電話ライクかな入力 日本語配列用なので、-DUSE109(109.nodoka)と併用してください。
+
+  #
+
+#include "contrib\\other.nodoka"                                        # (8) desktopviewの設定、SandSの設定、音量制御の設定、キーワード入力、フルキー数字キーカスタマイズ
+
+#include "contrib\\ime.nodoka"                                          # (9) IMEオンオフ制御
+
+#include "contrib\\cursor.nodoka"                                       # (10) カーソル移動、バックスペース、Enterなどの設定
+
+  #
+
+  #5. ユーザーカスタム設定
+
+  #  以下に、ご自身の設定を御書き下さい。この行は削除可能です。
+
+
+def subst    *無変換		= *無変換
+def subst    *変換		= *変換
+def subst    *ひらがな		= *Space
+def subst    *英数		= S-*英数
+mod control -= LeftControl
+
+
+key *F3= &WindowIdentify                                                #キーバインドの設定
+
+
+key C-Semicolon = &WindowMaximize	# C-; で最大化
+
+key LeftControl = S-英数		# CapsLock を有効化
+
+
+
+window NodokaGuiEdit /のどかGuiEdit/ : EmacsEdit                           #のどかGuiEdit
+
+
+#CLASS:	C:\Program Files (x86)\Google\Chrome\Application\chrome.exe:Chrome_WidgetWin_1:Chrome_OmniboxView
+#TITLE:	C:\Program Files (x86)\Google\Chrome\Application\chrome.exe:新しいタブ - Google Chrome:
+
+window Chrome /chrome.exe/ : EmacsEdit
+  key C-t = &Default
+
+#CLASS:	C:\Program Files (x86)\Evernote\Evernote\Evernote.exe:ENMainFrame:ENMainView:ENRightPaneView:ENNoteSplitView:ENNoteViewHost:ENNoteView:ENHtmlNoteCtrl:CefBrowserWindow:WebViewHost
+#TITLE:	C:\Program Files (x86)\Evernote\Evernote\Evernote.exe:すべてのノートブック - m.kawask@gmail.com - Evernote::::::::
+
+window Evernote /Evernote.exe/ : EmacsEdit
+
