@@ -8,7 +8,7 @@
 (setq
  column-number-mode t
  line-number-mode t
- make-backup-file nil
+ make-backup-files nil
  font-lock-mode t
  require-final-newline t
  next-line-add-newlines nil)
